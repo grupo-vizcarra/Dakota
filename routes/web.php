@@ -14,3 +14,11 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
+$router->group(['prefix' => 'account_status'], function () use ($router) {
+    $router->get('/', 'AccountStatusController@getAll');
+    $router->get('/{id}', 'AccountStatusController@find');
+    $router->post('/', 'AccountStatusController@create');
+    $router->post('/{id}', 'AccountStatusController@update');
+    $router->delete('/{id}', 'AccountStatusController@delete');
+});
