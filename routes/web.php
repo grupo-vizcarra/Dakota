@@ -22,3 +22,11 @@ $router->group(['prefix' => 'account_status'], function () use ($router) {
     $router->post('/{id}', 'AccountStatusController@update');
     $router->delete('/{id}', 'AccountStatusController@delete');
 });
+
+$router->group(['prefix' => 'type_log'], function () use ($router) {
+    $router->get('/', 'TypeLogController@getAll');
+    $router->get('/{id}', 'TypeLogController@find');
+    $router->post('/', 'TypeLogController@create');
+    $router->post('/{id}', 'TypeLogController@update');
+    $router->delete('/{id}', 'TypeLogController@delete');
+});
