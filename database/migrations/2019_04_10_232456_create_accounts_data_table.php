@@ -16,7 +16,7 @@ class CreateAccountsDataTable extends Migration{
             $table->string('key',100)->unique();
             $table->string('names',60);
             $table->string('first_name',60);
-            $table->string('last_names',60);
+            $table->string('last_name',60);
             $table->string('birthdate')->date();
             $table->string('photo',100)->default('profile.png');
             $table->timestamps();

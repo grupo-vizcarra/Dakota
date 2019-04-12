@@ -30,3 +30,11 @@ $router->group(['prefix' => 'type_log'], function () use ($router) {
     $router->post('/{id}', 'TypeLogController@update');
     $router->delete('/{id}', 'TypeLogController@delete');
 });
+
+$router->group(['prefix' => 'account_data'], function () use ($router) {
+    $router->get('/', 'AccountDataController@getAll');
+    $router->get('/{id}', 'AccountDataController@find');
+    $router->post('/', 'AccountDataController@create');
+    $router->post('/{id}', 'AccountDataController@update');
+    $router->delete('/{id}', 'AccountDataController@delete');
+});
