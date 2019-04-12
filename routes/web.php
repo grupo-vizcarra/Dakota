@@ -54,3 +54,11 @@ $router->group(['prefix' => 'permission'], function () use ($router) {
     $router->post('/{id}', 'permissionController@update');
     $router->delete('/{id}', 'permissionController@delete');
 });
+
+$router->group(['prefix' => 'task_type'], function () use ($router) {
+    $router->get('/', 'TaskTypeController@getAll');
+    $router->get('/{id}', 'TaskTypeController@find');
+    $router->post('/', 'TaskTypeController@create');
+    $router->post('/{id}', 'TaskTypeController@update');
+    $router->delete('/{id}', 'TaskTypeController@delete');
+});
