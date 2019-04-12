@@ -46,3 +46,11 @@ $router->group(['prefix' => 'rol'], function () use ($router) {
     $router->post('/{id}', 'rolController@update');
     $router->delete('/{id}', 'rolController@delete');
 });
+
+$router->group(['prefix' => 'permission'], function () use ($router) {
+    $router->get('/', 'permissionController@getAll');
+    $router->get('/{id}', 'permissionController@find');
+    $router->post('/', 'permissionController@create');
+    $router->post('/{id}', 'permissionController@update');
+    $router->delete('/{id}', 'permissionController@delete');
+});
