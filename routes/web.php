@@ -38,3 +38,11 @@ $router->group(['prefix' => 'account_data'], function () use ($router) {
     $router->post('/{id}', 'AccountDataController@update');
     $router->delete('/{id}', 'AccountDataController@delete');
 });
+
+$router->group(['prefix' => 'rol'], function () use ($router) {
+    $router->get('/', 'rolController@getAll');
+    $router->get('/{id}', 'rolController@find');
+    $router->post('/', 'rolController@create');
+    $router->post('/{id}', 'rolController@update');
+    $router->delete('/{id}', 'rolController@delete');
+});
