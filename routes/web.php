@@ -15,6 +15,8 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
+$router->post('auth/loing', ['uses' => 'AuthController@authenticate']);
+
 $router->group(['prefix' => 'account_status'], function () use ($router) {
     $router->get('/', 'AccountStatusController@getAll');
     $router->get('/{id}', 'AccountStatusController@find');
