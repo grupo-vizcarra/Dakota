@@ -67,3 +67,11 @@ $router->group(['prefix' => 'task_type'], function () use ($router) {
     $router->post('/{id}', 'TaskTypeController@update');
     $router->delete('/{id}', 'TaskTypeController@delete');
 });
+
+$router->group(['prefix' => 'account'], function () use ($router) {
+    $router->get('/', 'AccountController@getAll');
+    $router->get('/{id}', 'AccountController@find');
+    $router->post('/', 'AccountController@create');
+    $router->post('/{id}', 'AccountController@update');
+    $router->delete('/{id}', 'AccountController@delete');
+});

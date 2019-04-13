@@ -11,4 +11,8 @@ class Rol extends Model{
     public function permissions(){
         return $this->belongsToMany('App\Permission', 'permissions_default', 'rol_id', 'permission_id')->withTimestamps();
     }
+
+    public function accounts(){
+        return $this->hasMany('App\User', 'rol_id', 'id');
+    }
 }

@@ -41,8 +41,8 @@ class AccountDataController extends Controller{
         $account_data->first_name = $request->first_name;
         $account_data->last_name = $request->last_name;
         $account_data->birthdate = $request->birthdate;
+        $account_data->key = time();
         if ($request->hasFile('photo')) {
-            $account_data->first_name = 'ccc';
             $fileName =  time().'.png';
             $destinationPath = __DIR__.'./photos';
             $account_data->photo = $fileName;
