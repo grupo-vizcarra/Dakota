@@ -59,4 +59,41 @@ class RolController extends Controller{
         }
         return response()->json($rol->delete());
     }
+
+    public function permissions($id){
+        $rol = $this->find($id);
+        $rol = $rol->original;
+        $exist = (array)$rol;
+        if(!count($exist)){
+            return response("Rol no encontrado", 400);
+        }
+        $permissions = [];
+        foreach($rol->permissions as $permission){
+            array_push($permissions, 2);
+        }
+        return response()->json([
+            'rol' => $id,
+            'permissions' => $permissions
+        ]);
+    }
+
+    public function updatePermissions(Request $request, $id){
+        $rol = $this->find($id);
+        $rol = $rol->original;
+        $exist = (array)$rol;
+        if(!count($exist)){
+            return response("Rol no encontrado", 400);
+        }
+        return response()->json($rol->permissions()->sync($request->permissions));
+    }
+
+    public function togglePermission(Request $request, $id){
+        $rol = $this->find($id);
+        $rol = $rol->original;
+        $exist = (array)$rol;
+        if(!count($exist)){
+            return response("Rol no encontrado", 400);
+        }
+        return response()->json($rol->permissions()->toggle($request->permissions));
+    }
 }

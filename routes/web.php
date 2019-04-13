@@ -47,6 +47,9 @@ $router->group(['prefix' => 'rol'], function () use ($router) {
     $router->post('/', 'rolController@create');
     $router->post('/{id}', 'rolController@update');
     $router->delete('/{id}', 'rolController@delete');
+    $router->get('/{id}/permissions', 'RolController@permissions');
+    $router->post('/{id}/permissions', 'RolController@updatePermissions');
+    $router->post('/{id}/permission', 'RolController@togglePermission');
 });
 
 $router->group(['prefix' => 'permission'], function () use ($router) {
