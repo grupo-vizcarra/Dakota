@@ -42,22 +42,22 @@ $router->group(['prefix' => 'account_data'], function () use ($router) {
 });
 
 $router->group(['prefix' => 'rol'], function () use ($router) {
-    $router->get('/', 'rolController@getAll');
-    $router->get('/{id}', 'rolController@find');
-    $router->post('/', 'rolController@create');
-    $router->post('/{id}', 'rolController@update');
-    $router->delete('/{id}', 'rolController@delete');
+    $router->get('/', 'RolController@getAll');
+    $router->get('/{id}', 'RolController@find');
+    $router->post('/', 'RolController@create');
+    $router->post('/{id}', 'RolController@update');
+    $router->delete('/{id}', 'RolController@delete');
     $router->get('/{id}/permissions', 'RolController@permissions');
     $router->post('/{id}/permissions', 'RolController@updatePermissions');
     $router->post('/{id}/permission', 'RolController@togglePermission');
 });
 
 $router->group(['prefix' => 'permission'], function () use ($router) {
-    $router->get('/', 'permissionController@getAll');
-    $router->get('/{id}', 'permissionController@find');
-    $router->post('/', 'permissionController@create');
-    $router->post('/{id}', 'permissionController@update');
-    $router->delete('/{id}', 'permissionController@delete');
+    $router->get('/', 'PermissionController@getAll');
+    $router->get('/{id}', 'PermissionController@find');
+    $router->post('/', 'PermissionController@create');
+    $router->post('/{id}', 'PermissionController@update');
+    $router->delete('/{id}', 'PermissionController@delete');
 });
 
 $router->group(['prefix' => 'task_type'], function () use ($router) {
