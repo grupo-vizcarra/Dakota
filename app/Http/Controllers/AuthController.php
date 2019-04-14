@@ -53,20 +53,15 @@ class AuthController extends BaseController {
             'password'  => 'required'
         ]);
         // Find the user by email, nickname, num_employer
-        $email = $request->email;
-        $nickname = $request->nickname;
-        $num_employer = $request->num_employer;
-        if($email){
-            $user = User::where('email', $this->request->email)->first();
-        }else if($nickname){
-            $user = User::where('nickname', $this->request->nickname)->first();
-        }else{
-            $user = User::where('num_employer', $this->request->num_employer)->first();
+        $user = User::where('email', $this->request->user)->first();
+        if(!$user){
+            $user = User::where('nickname', $this->request->user)->first();
         }
-        if (!$user) {
-            return response()->json([
-                'error' => 'Usuario no encotrado.'
-            ], 400);
+        if(!$user){
+            $user = User::where('num_employer', $this->request->user)->first();
+        }
+        if(!$user){
+            return response("Usuario no encontrado", 400);
         }
         // Verify the password and generate the token
         if (Hash::check($this->request->input('password'), $user->password)) {
@@ -76,7 +71,7 @@ class AuthController extends BaseController {
         }
         // Bad Request response
         return response()->json([
-            'error' => 'Email or password is wrong.'
+            'error' => 'Usuario o contraseña incorrecta'
         ], 400);
     }
 }
