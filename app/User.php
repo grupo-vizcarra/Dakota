@@ -11,6 +11,8 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 class User extends Model implements AuthenticatableContract, AuthorizableContract{
     use Authenticatable, Authorizable;
     protected $table = 'accounts';
+    protected $primaryKey = 'key';
+    public $incrementing = false;
     /**
      * The attributes that are mass assignable.
      *
@@ -39,5 +41,9 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     public function status(){
         return $this->belongsTo('App\AccountStatus', 'status_id');
+    }
+
+    public function permissions(){
+        return $this->belongsToMany('App\Permission', 'accounts_has_permissions', 'account_id', 'permission_id')->withTimestamps();
     }
 }

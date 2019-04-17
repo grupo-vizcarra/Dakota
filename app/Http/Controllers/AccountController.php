@@ -95,4 +95,41 @@ class AccountController extends Controller{
         }
         return response()->json($user->delete());
     }
+
+    public function permissions(Request $request){
+        $user = $this->find($request->id);
+        $user = $user->original;
+        $exist = (array)$user;
+        if(!count($exist)){
+            return response("Cuenta de usuario no encontrada", 400);
+        }
+        $permissions = [];
+        foreach($user->permissions as $permission){
+            array_push($permissions, $permission->id);
+        }
+        return response()->json([
+            'usuario_id' => $user->key,
+            'permissions' => $permissions
+        ]);
+    }
+
+    public function updatePermissions(Request $request){
+        $user = $this->find($request->id);
+        $user = $user->original;
+        $exist = (array)$user;
+        if(!count($exist)){
+            return response("Cuenta de usuario no encontrada", 400);
+        }
+        return response()->json($user->permissions()->sync($request->permissions));
+    }
+
+    public function togglePermission(Request $request){
+        $user = $this->find($request->id);
+        $user = $user->original;
+        $exist = (array)$user;
+        if(!count($exist)){
+            return response("Cuenta de ususario no encontrada", 400);
+        }
+        return response()->json($user->permissions()->toggle($request->permissions));
+    }
 }

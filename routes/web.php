@@ -17,7 +17,7 @@ $router->get('/', function () use ($router) {
 
 $router->post('auth/login', ['uses' => 'AuthController@authenticate']);
 
-$router->group(['middleware' => 'jwt.auth'], function () use ($router){
+//$router->group(['middleware' => 'jwt.auth'], function () use ($router){
     $router->group(['prefix' => 'account_status'], function () use ($router) {
         $router->get('/', 'AccountStatusController@getAll');
         $router->get('/{id}', 'AccountStatusController@find');
@@ -71,9 +71,12 @@ $router->group(['middleware' => 'jwt.auth'], function () use ($router){
     
     $router->group(['prefix' => 'account'], function () use ($router) {
         $router->get('/', 'AccountController@getAll');
-        $router->get('/{id}', 'AccountController@find');
+        $router->get('/{id:[0-9]+}', 'AccountController@find');
         $router->post('/', 'AccountController@create');
         $router->post('/{id}', 'AccountController@update');
         $router->delete('/{id}', 'AccountController@delete');
+        $router->get('/permissions', 'AccountController@permissions');
+        $router->post('/permissions','AccountController@updatePermissions');
+        $router->post('/permission', 'AccountController@togglePermission');
     });
-});
+//});
