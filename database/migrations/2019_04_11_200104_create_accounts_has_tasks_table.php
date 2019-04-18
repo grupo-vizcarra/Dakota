@@ -12,6 +12,7 @@ class CreateAccountsHasTasksTable extends Migration{
      */
     public function up(){
         Schema::create('accounts_has_tasks', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->unsignedSmallInteger('task_id');
             $table->string('account_id', 100);
             $table->longText('details');

@@ -169,4 +169,41 @@ class AccountController extends Controller{
         }
         return response()->json($user->logs()->toggle($request->logs));
     }
+
+    public function tasks(Request $request){
+        $user = $this->find($request->id);
+        $user = $user->original;
+        $exist = (array)$user;
+        if(!count($exist)){
+            return response("Cuenta de usuario no encontrada", 400);
+        }
+        $tasks = [];
+        foreach($user->tasks as $task){
+            array_push($tasks, ['id' => $task->id, 'details' => $task->pivot->details, 'status' => $task->pivot->status]);
+        }
+        return response()->json([
+            'usuario_id' => $user->key,
+            'tasks' => $tasks
+        ]);
+    }
+
+    public function attachTask(Request $request){
+        $user = $this->find($request->id);
+        $user = $user->original;
+        $exist = (array)$user;
+        if(!count($exist)){
+            return response("Cuenta de usuario no encontrada", 400);
+        }
+        return response()->json($user->tasks()->attach($request->task, ['details' => $request->details, 'status' => $request->status]));
+    }
+
+    public function dettachTask(Request $request){
+        $user = $this->find($request->id);
+        $user = $user->original;
+        $exist = (array)$user;
+        if(!count($exist)){
+            return response("Cuenta de usuario no encontrada", 400);
+        }
+        return response()->json($user->tasks()->detach($request->task, ['details' => $request->details, 'status' => $request->status]));
+    }
 }

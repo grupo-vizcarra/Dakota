@@ -49,4 +49,8 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public function logs(){
         return $this->belongsToMany('App\TypeLog', 'log', 'account_id', 'type_log_id')->withTimestamps();
     }
+
+    public function tasks(){
+        return $this->belongsToMany('App\TaskType', 'accounts_has_tasks', 'account_id', 'task_id')->withPivot('details', 'status')->withTimestamps();
+    }
 }
