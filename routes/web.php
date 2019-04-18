@@ -79,4 +79,10 @@ $router->post('auth/login', ['uses' => 'AuthController@authenticate']);
         $router->post('/permissions','AccountController@updatePermissions');
         $router->post('/permission', 'AccountController@togglePermission');
     });
+    
+    $router->group(['prefix' => 'log'], function () use ($router){
+        $router->get('/', 'AccountController@logs');
+        $router->post('/', 'AccountController@toggleLog');
+        $router->post('/refresh','AccountController@updateLogs');
+    });
 //});

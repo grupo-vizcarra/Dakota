@@ -128,8 +128,45 @@ class AccountController extends Controller{
         $user = $user->original;
         $exist = (array)$user;
         if(!count($exist)){
-            return response("Cuenta de ususario no encontrada", 400);
+            return response("Cuenta de usuario no encontrada", 400);
         }
         return response()->json($user->permissions()->toggle($request->permissions));
+    }
+
+    public function logs(Request $request){
+        $user = $this->find($request->id);
+        $user = $user->original;
+        $exist = (array)$user;
+        if(!count($exist)){
+            return response("Cuenta de usuario no encontrada", 400);
+        }
+        $logs = [];
+        foreach($user->logs as $log){
+            array_push($logs, $log->id);
+        }
+        return response()->json([
+            'usuario_id' => $user->key,
+            'logs' => $logs
+        ]);
+    }
+
+    public function updateLogs(Request $request){
+        $user = $this->find($request->id);
+        $user = $user->original;
+        $exist = (array)$user;
+        if(!count($exist)){
+            return response("Cuenta de usuario no encontrada", 400);
+        }
+        return response()->json($user->logs()->sync($request->logs));
+    }
+
+    public function toggleLog(Request $request){
+        $user = $this->find($request->id);
+        $user = $user->original;
+        $exist = (array)$user;
+        if(!count($exist)){
+            return response("Cuenta de usuario no encontrada", 400);
+        }
+        return response()->json($user->logs()->toggle($request->logs));
     }
 }

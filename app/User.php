@@ -46,4 +46,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public function permissions(){
         return $this->belongsToMany('App\Permission', 'accounts_has_permissions', 'account_id', 'permission_id')->withTimestamps();
     }
+    public function logs(){
+        return $this->belongsToMany('App\TypeLog', 'log', 'account_id', 'type_log_id')->withTimestamps();
+    }
 }
