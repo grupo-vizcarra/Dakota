@@ -101,7 +101,7 @@ class AccountController extends Controller{
         $user = $user->original;
         $exist = (array)$user;
         if(!count($exist)){
-            return response("Cuenta de usuario no encontrada", 400);
+            return response("Cuenta de usuario no encontrada ". $request->id, 400);
         }
         $permissions = [];
         foreach($user->permissions as $permission){

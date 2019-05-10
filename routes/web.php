@@ -69,26 +69,27 @@ $router->group(['middleware' => 'jwt.auth'], function () use ($router){
         $router->delete('/{id}', 'TaskTypeController@delete');
     });
     
-    $router->group(['prefix' => 'account'], function () use ($router) {
-        $router->get('/', 'AccountController@getAll');
-        $router->get('/{id:[0-9]+}', 'AccountController@find');
-        $router->post('/', 'AccountController@create');
-        $router->post('/{id}', 'AccountController@update');
-        $router->delete('/{id}', 'AccountController@delete');
-        $router->get('/permissions', 'AccountController@permissions');
-        $router->post('/permissions','AccountController@updatePermissions');
-        $router->post('/permission', 'AccountController@togglePermission');
-    });
+    
     
     $router->group(['prefix' => 'log'], function () use ($router){
         $router->get('/', 'AccountController@logs');
         $router->post('/', 'AccountController@toggleLog');
         $router->post('/refresh','AccountController@updateLogs');
     });
-
+    
     $router->group(['prefix' => 'task'], function () use ($router){
         $router->get('/', 'AccountController@tasks');
         $router->post('/', 'AccountController@attachTask');
         $router->post('/delete', 'AccountController@dettachTask');
     });
+});
+$router->group(['prefix' => 'account'], function () use ($router) {
+    $router->get('/', 'AccountController@getAll');
+    $router->get('/{id:[0-9]+}', 'AccountController@find');
+    $router->post('/', 'AccountController@create');
+    $router->post('/{id}', 'AccountController@update');
+    $router->delete('/{id}', 'AccountController@delete');
+    $router->get('/permissions', 'AccountController@permissions');
+    $router->post('/permissions','AccountController@updatePermissions');
+    $router->post('/permission', 'AccountController@togglePermission');
 });

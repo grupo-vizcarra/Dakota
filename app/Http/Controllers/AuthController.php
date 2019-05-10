@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Validator;
 use App\User;
+use App\Http\Controllers\AccountController;
 use Firebase\JWT\JWT;
 use Illuminate\Http\Request;
 use Firebase\JWT\ExpiredException;
@@ -34,6 +35,8 @@ class AuthController extends BaseController {
         $payload = [
             'iss' => "lumen-jwt", // Issuer of the token
             'sub' => $user->id, // Subject of the token
+            'rol_id' => $user->rol_id, // Rol id
+            'status' => $user->status_id, //Status de la cuenta
             'iat' => time(), // Time when JWT was issued. 
             'exp' => time() + 60*60 // Expiration time
         ];
@@ -65,8 +68,15 @@ class AuthController extends BaseController {
         }
         // Verify the password and generate the token
         if (Hash::check($this->request->input('password'), $user->password)) {
+            $usuario = new AccountController();
+            $id = New Request();
+            $id->id = $user->key;
+            $permisos = $usuario->permissions($id);
             return response()->json([
-                'token' => $this->jwt($user)
+                'token' => $this->jwt($user),
+                'permissions' => $permisos,
+                'rol_id' => $user->rol_id,
+                'status_id' => $user->status->id
             ], 200);
         }
         // Bad Request response
