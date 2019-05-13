@@ -13,6 +13,6 @@ class Rol extends Model{
     }
 
     public function accounts(){
-        return $this->hasMany('App\User', 'rol_id', 'id');
+        return $this->hasMany('App\User', 'rol_id', 'id'); 
     }
 }

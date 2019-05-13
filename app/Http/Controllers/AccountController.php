@@ -21,7 +21,6 @@ class AccountController extends Controller{
                 'nickname' => 'required|unique:accounts',
                 'num_employer' => 'required|unique:accounts',
                 'email' => 'required|unique:accounts',
-                'password' => 'required',
                 'data_id' => 'required|exists:accounts_data,key',
                 'status_id' => 'required|exists:accounts_status,id',
                 'rol_id' => 'required|exists:roles,id'
@@ -53,7 +52,8 @@ class AccountController extends Controller{
         $user->nickname = $request->nickname;
         $user->num_employer = $request->num_employer;
         $user->email = $request->email;
-        $user->password = Hash::make($request->password);
+        $password = ($request->password ? $request->password : env('PASSWORD'));
+        $user->password = Hash::make($password);
         $user->status_id = $request->status_id;
         $user->data_id = $request->data_id;
         $user->rol_id = $request->rol_id;

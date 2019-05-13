@@ -9,6 +9,6 @@ class AccountStatus extends Model{
     protected $fillable = ['name'];
 
     public function accounts(){
-        return $this->hasMany('App\User', 'status_id', 'id');
+        return $this->hasMany('App\User', 'status_id', 'id'); 
     }
 }

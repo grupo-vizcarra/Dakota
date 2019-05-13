@@ -15,6 +15,7 @@ return [
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
+            'engine' => env('DB_ENGINE', null),
         ],
 
         'AWS' => [
@@ -27,6 +28,7 @@ return [
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
+            'engine' => env('DB_ENGINE', null),
         ],
     ],
 ];

@@ -17,7 +17,7 @@ $router->get('/', function () use ($router) {
 
 $router->post('auth/login', ['uses' => 'AuthController@authenticate']);
 
-$router->group(['middleware' => 'jwt.auth'], function () use ($router){
+$router->group(['middleware' => 'jwt.auth'], function () use ($router){ });
     $router->group(['prefix' => 'account_status'], function () use ($router) {
         $router->get('/', 'AccountStatusController@getAll');
         $router->get('/{id}', 'AccountStatusController@find');
@@ -82,7 +82,6 @@ $router->group(['middleware' => 'jwt.auth'], function () use ($router){
         $router->post('/', 'AccountController@attachTask');
         $router->post('/delete', 'AccountController@dettachTask');
     });
-});
 $router->group(['prefix' => 'account'], function () use ($router) {
     $router->get('/', 'AccountController@getAll');
     $router->get('/{id:[0-9]+}', 'AccountController@find');

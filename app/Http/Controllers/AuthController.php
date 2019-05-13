@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Validator;
 use App\User;
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\AccountDataController;
 use Firebase\JWT\JWT;
 use Illuminate\Http\Request;
 use Firebase\JWT\ExpiredException;
@@ -56,32 +57,41 @@ class AuthController extends BaseController {
             'password'  => 'required'
         ]);
         // Find the user by email, nickname, num_employer
-        $user = User::where('email', $this->request->user)->first();
+        $user = User::where('email', $this->request->user)
+                    ->orWhere('nickname', $this->request->user)
+                    ->orWhere('num_employer', $this->request->user)
+                    ->first();
         if(!$user){
-            $user = User::where('nickname', $this->request->user)->first();
-        }
-        if(!$user){
-            $user = User::where('num_employer', $this->request->user)->first();
-        }
-        if(!$user){
-            return response("Usuario no encontrado", 400);
+            return response(['msg' => "Usuario no encontrado", 'status' => 404], 200);
         }
         // Verify the password and generate the token
         if (Hash::check($this->request->input('password'), $user->password)) {
             $usuario = new AccountController();
+            $usuario_data = new AccountDataController();
             $id = New Request();
             $id->id = $user->key;
             $permisos = $usuario->permissions($id);
+            $datos_usuario = $usuario_data->find($user->id);
             return response()->json([
-                'token' => $this->jwt($user),
-                'permissions' => $permisos,
-                'rol_id' => $user->rol_id,
-                'status_id' => $user->status->id
+                'account' => [
+                    '_token' => $this->jwt($user),
+                    '_status' => $user->status->id,
+                    '_id' => $user->id,
+                    '_key' => $user->key,
+                    '_nickname' => $user->nickname,
+                    '_num_employer' => $user->num_employer,
+                    '_photo' =>  $datos_usuario->original->photo
+                ],'user' =>[
+                    '_rol' => ['_id' => $user->rol->id, '_name' => $user->rol->name],
+                    '_name' => ['_names' => $datos_usuario->original->names, '_fname' => $datos_usuario->original->first_name, '_lname' => $datos_usuario->original->last_name]
+                ], '_permissions' => $permisos->original['permissions'],
+                'status' => 200
             ], 200);
         }
         // Bad Request response
         return response()->json([
-            'error' => 'Usuario o contraseña incorrecta'
+            'msg' => 'Usuario o contraseña incorrecta',
+            'status' => 400
         ], 400);
     }
 }

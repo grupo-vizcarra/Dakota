@@ -36,7 +36,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     }
 
     public function rol(){
-        return $this->belongsTo('App\Roles', 'rol_id');
+        return $this->belongsTo('App\Rol', 'rol_id');
     }
 
     public function status(){
